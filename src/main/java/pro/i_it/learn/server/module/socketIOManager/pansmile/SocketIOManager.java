@@ -2,7 +2,6 @@ package pro.i_it.learn.server.module.socketIOManager.pansmile;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.mysql.fabric.Server;
 import pro.i_it.learn.server.model.MessageModel;
 import pro.i_it.learn.server.module.ModuleManager;
 import pro.i_it.learn.server.module.interfaces.ISender;
@@ -12,7 +11,7 @@ import pro.i_it.learn.server.module.interfaces.ISocketIOManager;
 /**
  * Created by studio on 04.03.17.
  */
-public class SocketIOManager implements ISocketIOManager {
+public class SocketIOManager implements ISocketIOManager, ISender {
     private SocketIOServer server;
 
     public SocketIOManager() {
@@ -26,7 +25,7 @@ public class SocketIOManager implements ISocketIOManager {
     private void initServer() throws Exception {
         if (server == null) {
             Configuration config = new Configuration();
-            config.setPort(9090);
+            config.setPort(8080);
             config.setHostname("localhost");
             server = new SocketIOServer(config);
             System.out.println("SERVER CREATED");
@@ -51,7 +50,18 @@ public class SocketIOManager implements ISocketIOManager {
 
     @Override
     public ISender getSocketIOSender() {
-        return null;
+        return this;
     }
 
+    @Override
+    public boolean sendAll(MessageModel messageModel) {
+        server.getAllClients().forEach(client -> client.sendEvent(messageModel.getMessage()));
+
+        return false;
+    }
+
+    @Override
+    public boolean sendById(MessageModel messageModel, int userId) {
+        return false;
+    }
 }

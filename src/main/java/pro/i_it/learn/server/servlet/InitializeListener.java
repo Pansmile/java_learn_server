@@ -1,8 +1,5 @@
 package pro.i_it.learn.server.servlet;
 
-import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.SocketIOServer;
-import pro.i_it.learn.server.model.MessageModel;
 import pro.i_it.learn.server.module.ModuleManager;
 import pro.i_it.learn.server.module.socketIOManager.pansmile.SocketIOManager;
 
@@ -25,7 +22,7 @@ public class InitializeListener implements ServletContextListener {
             socketIOManager.startSocketIOServer();
             System.out.println("SERVER STARTED!");
         } catch (Exception e0) {
-            e0.fillInStackTrace();
+            e0.printStackTrace();
         }
 
 
@@ -38,7 +35,7 @@ public class InitializeListener implements ServletContextListener {
             socketIOManager.stopSocketIOServer();
             System.out.println("SERVER STOPPED!");
         } catch (Exception e0) {
-            e0.fillInStackTrace();
+            e0.printStackTrace();
         }
         System.out.println("shutdown");
 

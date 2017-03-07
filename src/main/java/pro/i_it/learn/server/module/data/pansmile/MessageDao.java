@@ -4,7 +4,6 @@ import pro.i_it.learn.server.model.MessageModel;
 import pro.i_it.learn.server.module.data.interfaces.IDao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by pansmile on 04.03.17.

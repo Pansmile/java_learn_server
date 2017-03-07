@@ -3,7 +3,6 @@ package pro.i_it.learn.server.module.chat.pansmile;
 import pro.i_it.learn.server.model.MessageModel;
 import pro.i_it.learn.server.module.ModuleManager;
 import pro.i_it.learn.server.module.data.pansmile.MessageDao;
-import pro.i_it.learn.server.module.data.pansmile.UserDao;
 import pro.i_it.learn.server.module.interfaces.IChatManager;
 import pro.i_it.learn.server.module.interfaces.ISender;
 
@@ -18,6 +17,7 @@ public class ChatManager implements IChatManager {
 
     public ChatManager() {
         senders = new ArrayList<>();
+        initMessageDao();
     }
 
     private void initMessageDao() {
@@ -29,7 +29,6 @@ public class ChatManager implements IChatManager {
 
     @Override
     public void inputMessage(MessageModel model) {
-        initMessageDao();
         messageDao.saveData(model);
         senders.forEach(sender -> sender.sendAll(model));
 
@@ -44,7 +43,6 @@ public class ChatManager implements IChatManager {
 
     @Override
     public ArrayList<MessageModel> getHistory() {
-        initMessageDao();
         return messageDao.getAllData();
     }
 }
