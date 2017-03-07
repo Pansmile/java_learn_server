@@ -11,7 +11,6 @@ import java.util.ArrayList;
  *
  */
 public class ChatManager implements IChatManager {
-    private ModuleManager moduleManager;
     private ArrayList<ISender> senders;
 
     public ChatManager() {
@@ -22,10 +21,8 @@ public class ChatManager implements IChatManager {
 
     @Override
     public void inputMessage(MessageModel model) {
-        moduleManager.getDataManager().getMessageDao().saveData(model);
-        for (ISender sender : senders) {
-            sender.sendAll(model);
-        }
+        ModuleManager.getModuleManager().getDataManager().getMessageDao().saveData(model);
+        senders.forEach(sender -> sender.sendAll(model));
 
     }
 
@@ -38,9 +35,6 @@ public class ChatManager implements IChatManager {
 
     @Override
     public ArrayList<MessageModel> getHistory() {
-        if (moduleManager == null) {
-            moduleManager = ModuleManager.getModuleManager();
-        }
-        return moduleManager.getDataManager().getMessageDao().getAllData();
+        return ModuleManager.getModuleManager().getDataManager().getMessageDao().getAllData();
     }
 }

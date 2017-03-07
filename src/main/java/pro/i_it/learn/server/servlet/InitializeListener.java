@@ -2,6 +2,9 @@ package pro.i_it.learn.server.servlet;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
+import pro.i_it.learn.server.model.MessageModel;
+import pro.i_it.learn.server.module.ModuleManager;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -45,6 +48,8 @@ public class InitializeListener implements ServletContextListener {
             server.addEventListener("MESSAGE", String.class,
                     (client, message, ackRequest) -> {
                         System.out.println("Client said: " + message);
+                        ModuleManager.getModuleManager().getChatManager().inputMessage(
+                                new MessageModel(client.getNamespace().getName(), message));
                     });
 
         }

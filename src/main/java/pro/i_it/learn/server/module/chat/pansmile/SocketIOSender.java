@@ -6,7 +6,7 @@ import pro.i_it.learn.server.module.interfaces.ISender;
 /**
  * Created by pansmile on 04.03.17.
  */
-public class Sender implements ISender {
+public class SocketIOSender implements ISender {
     @Override
     public boolean sendAll(MessageModel messageModel) {
         return false;

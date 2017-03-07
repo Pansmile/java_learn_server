@@ -13,7 +13,7 @@ public class MessageDao implements IDao<MessageModel> {
     private ArrayList<MessageModel> history;
 
     public MessageDao() {
-        history = new ArrayList<>(1000);
+        history = new ArrayList<>();
     }
 
     @Override
@@ -32,11 +32,8 @@ public class MessageDao implements IDao<MessageModel> {
         if (history.size() < 1000) {
             history.add(messageModel);
         } else {
-            for (int i = 0; i < 999; i++) {
-                MessageModel tmp = history.get(i + 1);
-                history.set(i, tmp);
-                history.add(messageModel);
-            }
+           history.remove(0);
+           history.add(messageModel);
         }
     }
 
