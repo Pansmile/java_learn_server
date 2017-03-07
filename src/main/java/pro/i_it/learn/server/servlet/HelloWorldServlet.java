@@ -26,8 +26,6 @@ import java.util.EventListener;
 public class HelloWorldServlet extends HttpServlet {
     private HelloModel helloModel;
     private ModuleManager moduleManager;
-    private Configuration config;
-    private SocketIOServer server;
 
     @Override
     public void init() throws ServletException {
@@ -44,7 +42,6 @@ public class HelloWorldServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().println(helloModel.toString());
-        resp.getWriter().println(moduleManager.getDataManager().getUserDao().getAllData());
         ArrayList<MessageModel> allMessage = moduleManager.getDataManager().getMessageDao().getAllData();
         for (MessageModel messageModel : allMessage) {
             resp.getWriter().println(messageModel.getFrom() + " : " + messageModel.getMessage());

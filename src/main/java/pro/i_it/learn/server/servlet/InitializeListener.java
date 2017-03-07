@@ -13,32 +13,32 @@ import javax.servlet.annotation.WebListener;
 public class InitializeListener implements ServletContextListener {
     private SocketIOServer server;
 
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        System.out.println("Server startup");
+        System.out.println("startup");
         try {
             initServer();
             server.start();
-            System.out.println("SERVER STARTED");
-
-        } catch (Exception e) {
-            System.out.println(e.getStackTrace());
+            System.out.println("SERVER STARTED!");
+        } catch (Exception e0) {
+            e0.fillInStackTrace();
         }
 
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        System.out.println("Server shutdown");
         server.stop();
-        System.out.println("SERVER STOPPED");
+        System.out.println("SERVER STOPPED!");
+        System.out.println("shutdown");
 
     }
 
-    private void initServer() {
+   private void initServer() throws Exception {
         if (server == null) {
             Configuration config = new Configuration();
-            config.setPort(8080);
+            config.setPort(9090);
             config.setHostname("localhost");
             server = new SocketIOServer(config);
             System.out.println("SERVER CREATED");

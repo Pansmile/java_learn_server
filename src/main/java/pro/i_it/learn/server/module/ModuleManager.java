@@ -20,6 +20,7 @@ public class ModuleManager implements IModuleManager {
     private ModuleManager() {
         chatManager = new ChatManager();
         dataManager = new DataManager();
+        socketIOManager = new SocketIOManager();
     }
 
     public static ModuleManager getModuleManager() {
@@ -31,9 +32,6 @@ public class ModuleManager implements IModuleManager {
 
     @Override
     public ISocketIOManager getSocketIOManager() {
-        if (socketIOManager == null) {
-            socketIOManager = new SocketIOManager();
-        }
         return socketIOManager;
     }
 
