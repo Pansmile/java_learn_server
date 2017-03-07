@@ -1,7 +1,7 @@
 package pro.i_it.learn.server.servlet;
 
-import pro.i_it.learn.server.module.ModuleManager;
-import pro.i_it.learn.server.module.interfaces.ISocketIOManager;
+import com.corundumstudio.socketio.Configuration;
+import com.corundumstudio.socketio.SocketIOServer;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -11,12 +11,14 @@ import javax.servlet.annotation.WebListener;
  */
 @WebListener
 public class InitializeListener implements ServletContextListener {
-    private ISocketIOManager manager;
+    private SocketIOServer server;
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         System.out.println("Server startup");
         try {
-            ModuleManager.getModuleManager().getSocketIOManager().getServer().start();
+            initServer();
+            server.start();
             System.out.println("SERVER STARTED");
 
         } catch (Exception e) {
@@ -28,8 +30,23 @@ public class InitializeListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         System.out.println("Server shutdown");
-        ModuleManager.getModuleManager().getSocketIOManager().getServer().stop();
+        server.stop();
         System.out.println("SERVER STOPPED");
 
+    }
+
+    private void initServer() {
+        if (server == null) {
+            Configuration config = new Configuration();
+            config.setPort(8080);
+            config.setHostname("localhost");
+            server = new SocketIOServer(config);
+            System.out.println("SERVER CREATED");
+            server.addEventListener("MESSAGE", String.class,
+                    (client, message, ackRequest) -> {
+                        System.out.println("Client said: " + message);
+                    });
+
+        }
     }
 }

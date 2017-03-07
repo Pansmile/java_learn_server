@@ -7,5 +7,4 @@ import com.corundumstudio.socketio.SocketIOServer;
  */
 public interface ISocketIOManager {
     ISender getSocketIOSender();
-    SocketIOServer getServer();
 }
